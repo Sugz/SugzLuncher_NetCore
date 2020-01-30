@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>Clément Plantec</Authors>
+    <Copyright>Clément Plantec</Copyright>
+    <ApplicationIcon>SugzLuncher.ico</ApplicationIcon>
+    <PackageIcon>SugzLuncher.ico</PackageIcon>
+    <PackageIconUrl />
+    <Version>0.1.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\bin_empty.png" />
+    <None Remove="Resources\Icons\bin_full.png" />
+    <None Remove="Resources\Icons\Files.png" />
+    <None Remove="Resources\Icons\game.png" />
+    <None Remove="Resources\Icons\sound.png" />
+    <None Remove="Resources\Icons\SugzLuncher.ico" />
+    <None Remove="Resources\Icons\tools.png" />
+    <None Remove="Resources\Icons\web.png" />
+    <None Remove="Resources\Icons\work.png" />
+    <None Include="Resources\Icons\SugzLuncher.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="Shell32.dll">
+      <Guid>50a7e9b0-70ef-11d1-b75a-00a0c90564fe</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>false</Isolated>
+    </COMReference>
+    <COMReference Include="IWshRuntimeLibrary.dll">
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.18362.2005" />
+    <PackageReference Include="MvvmLightStd10" Version="5.4.1.2" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Windows">
+      <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.18362.0\Windows.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\bin_empty.png" />
+    <Resource Include="Resources\Icons\bin_full.png" />
+    <Resource Include="Resources\Icons\files.png" />
+    <Resource Include="Resources\Icons\game.png" />
+    <Resource Include="Resources\Icons\sound.png" />
+    <Resource Include="Resources\Icons\SugzLuncher.ico" />
+    <Resource Include="Resources\Icons\tools.png" />
+    <Resource Include="Resources\Icons\web.png" />
+    <Resource Include="Resources\Icons\work.png" />
+  </ItemGroup>
+
+</Project>
