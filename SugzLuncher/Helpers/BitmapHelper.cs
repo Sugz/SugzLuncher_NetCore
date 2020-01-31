@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -57,6 +58,22 @@ namespace SugzLuncher.Helpers
             render.Render(visual);
 
             return render;
+        }
+
+        internal static void SaveBitmapSourceToFile(BitmapSource bmp, string filePath)
+        {
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            encoder.Save(fileStream);
+        }
+
+        internal static BitmapSource FromFile(string filePath)
+        {
+            if (File.Exists(filePath))
+                return new BitmapImage(new Uri(filePath));
+            else
+                throw new ArgumentException($"the file do not exist: {filePath}");
         }
     }
 

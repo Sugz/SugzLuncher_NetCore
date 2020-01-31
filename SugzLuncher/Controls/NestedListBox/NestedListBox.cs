@@ -234,7 +234,6 @@ namespace SugzLuncher.Controls
                 ItemTemplate = ItemTemplate,
                 ItemTemplateSelector = ItemTemplateSelector,
                 Resources = Resources //TODO: Check that, might be cool
-                //TODO assign _ParentListBox here
             };
 
             ChildListBox.SetBinding(DataContextProperty, new Binding("SelectedItem") { Source = this });
