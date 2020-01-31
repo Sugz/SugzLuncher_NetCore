@@ -61,7 +61,14 @@ namespace SugzLuncher.Helpers
 
         internal static string SettingsFolder => $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{Product}\\{Version}";
 
-        internal static string SettingsFile => $"{SettingsFolder}\\SugzLuncherSettings.xml";
+        internal static string UserSettingsFile => $"{SettingsFolder}\\UserSettings.xml";
+
+        internal static string DefaultSettingsFile => $"{SettingsFolder}\\DefaultSettings.xml";
+
+
+        internal static string FileFolder => $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{Product}";
+
+        internal static string IconFolder => $"{FileFolder}\\Icons";
 
         #endregion Product Infos
 

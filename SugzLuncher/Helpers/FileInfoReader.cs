@@ -45,22 +45,26 @@ namespace SugzLuncher.Helpers
         }
 
 
-        internal static Tuple<string, string, BitmapSource> GetWin10Shortcut(string file)
+        internal static string[] GetWin10Shortcut(string file)
         {
-            string pathOnly = System.IO.Path.GetDirectoryName(file);
-            string filenameOnly = System.IO.Path.GetFileName(file);
+            string pathOnly = Path.GetDirectoryName(file);
+            string filenameOnly = Path.GetFileName(file);
 
             Shell shell = new Shell();
             Folder folder = shell.NameSpace(pathOnly);
             FolderItem folderItem = folder.ParseName(filenameOnly);
             if (folderItem != null)
             {
-                ShellLinkObject link = (Shell32.ShellLinkObject)folderItem.GetLink;
+                ShellLinkObject link = (ShellLinkObject)folderItem.GetLink;
 
                 foreach (ShellObject app in InstalledApps.ToIEnumerable())
                 {
                     if (app.Name == link.Target.Name)
-                        return new Tuple<string, string, BitmapSource>(app.ParsingName, app.Name, app.Thumbnail.ExtraLargeBitmapSource);
+                    {
+                        string iconPath = $"{Constants.IconFolder}\\{app.Name.ToLower().Replace(" ", "_")}.png";
+                        BitmapHelper.SaveBitmapSourceToFile(app.Thumbnail.ExtraLargeBitmapSource, iconPath);
+                        return new[] { app.ParsingName, app.Name, iconPath };
+                    } 
                 }
             }
 

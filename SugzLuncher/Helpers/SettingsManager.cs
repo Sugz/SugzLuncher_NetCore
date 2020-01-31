@@ -1,11 +1,14 @@
-﻿using SugzLuncher.ViewModels;
+﻿using GalaSoft.MvvmLight;
+using SugzLuncher.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace SugzLuncher.Helpers
@@ -24,7 +27,7 @@ namespace SugzLuncher.Helpers
         #region Properties
 
         public Point WindowLocation { get; set; }
-        public ObservableCollection<BaseViewModel> Lunchers { get; set; } = new ObservableCollection<BaseViewModel>();
+        public ObservableCollection<ViewModelBase> Lunchers { get; set; } = new ObservableCollection<ViewModelBase>();
         public bool ShowNames { get; set; }
         public bool ShowIcons { get; set; }
         public IconSize IconsSize { get; set; }
@@ -38,8 +41,7 @@ namespace SugzLuncher.Helpers
 
         public SettingsManager()
         {
-            Debug.WriteLine("Create SettingsManager");
-            Load();
+            //Debug.WriteLine("Create SettingsManager");
         }
 
 
@@ -49,16 +51,29 @@ namespace SugzLuncher.Helpers
 
         #region Load
 
-        private void Load()
+        public XElement Load()
         {
-            _IsLoading = true;
+            XElement xElement = null;
 
             if (!Directory.Exists(Constants.SettingsFolder))
                 Directory.CreateDirectory(Constants.SettingsFolder);
 
-            LoadInitialConfiguration();
+            if (!File.Exists(Constants.UserSettingsFile))
+            {
+                LoadInitialConfiguration();
+            }
+            else
+            {
+                _IsLoading = true;
+                XDocument document = XDocument.Load(Constants.UserSettingsFile);
+                //XElement root = document.Root;
+                //XElement main = root.Elements().First();
+
+                xElement = document.Root.Elements().First();
+            }
 
             _IsLoading = false;
+            return xElement;
         }
 
 
@@ -92,45 +107,29 @@ namespace SugzLuncher.Helpers
         #region Save
 
 
-        private void SaveLuncher(LuncherViewModel luncher, XElement xParent)
-        {
-            XElement xLuncher = new XElement("Luncher",
-                new XAttribute("Name", luncher.Name),
-                new XAttribute("TargetPath", luncher.TargetPath != null ? luncher.TargetPath : string.Empty),
-                new XAttribute("IconPath", luncher.IconPath != null ? luncher.IconPath : string.Empty),
-                new XAttribute("IconIndex", luncher.IconIndex));
 
-            xParent.Add(xLuncher);
-            //luncher.Children.ForEach(x => SaveLuncher(x, xLuncher));
-        }
-
-        internal void Save()
+        internal void Save(XElement xElement)
         {
             if (_IsLoading)
                 return;
 
-
             XDocument document = new XDocument();
-            XElement xSettings = new XElement("Settings");
+            XElement xSettings = new XElement($"SugzLuncher_{Constants.Version}_UserSettings");
             document.Add(xSettings);
 
-            // Save the Window location
-            XElement xWindowLocation = new XElement("WindowLocation",
-                new XAttribute("Left", WindowLocation.X),
-                new XAttribute("Top", WindowLocation.Y));
-            xSettings.Add(xWindowLocation);
+            xSettings.Add(xElement);
 
-            // Save all the lunchers
-            XElement xLunchers = new XElement("Lunchers");
-            xSettings.Add(xLunchers);
-            
-            foreach(BaseViewModel baseViewModel in Lunchers)
-            {
-                
-            }
+            // Save the formated document
+            XmlWriterSettings settings = new XmlWriterSettings {
+                Indent = true,
+                IndentChars = "\t",
+                NewLineOnAttributes = true
+            };
 
-            //Lunchers.ForEach(x => SaveLuncher(x, xLunchers));
-
+            XmlWriter writer = XmlWriter.Create(Constants.UserSettingsFile, settings);
+            document.Save(writer);
+            writer.Flush();
+            writer.Close();
 
         }
 

@@ -4,10 +4,9 @@ namespace SugzLuncher.Interfaces
 {
     public interface IDropTarget
     {
-        //TODO: bool CanAccept(object source, IDataObject data);
-
-        bool CanDrop { get; }
-        
+        //bool CanDrop { get; }
+        bool CanDrop(object source, IDataObject data);
         void Drop(IDataObject data, int? index = null);
+
     }
 }
