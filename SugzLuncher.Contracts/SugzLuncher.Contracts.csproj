@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>Clément Plantec</Authors>
+    <Copyright>Clément Plantec</Copyright>
+    <Description>Classes and Interfaces for creating SugzLuncher plugins</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>..\Dependencies\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
