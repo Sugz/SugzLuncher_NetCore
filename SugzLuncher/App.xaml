@@ -97,26 +97,7 @@
             <HierarchicalDataTemplate x:Key="LuncherDataTemplate"
                                       DataType="{x:Type vm:LuncherViewModel}"
                                       ItemsSource="{Binding Children}">
-                <Button HorizontalContentAlignment="Left"
-                        Command="{Binding ExecuteAppCommand}"
-                        Style="{StaticResource BaseButtonStyle}">
-                    <StackPanel Margin="8"
-                                Orientation="Horizontal"
-                                SnapsToDevicePixels="true">
-                        <Image Width="{Binding Parent.ChildrenIconSize, Converter={StaticResource EnumToInt}}"
-                               Height="{Binding Parent.ChildrenIconSize, Converter={StaticResource EnumToInt}}"
-                               VerticalAlignment="Center"
-                               RenderOptions.BitmapScalingMode="Fant"
-                               SnapsToDevicePixels="true"
-                               Source="{Binding IconSource}" />
-                        <TextBlock Margin="20,0,10,0"
-                                   VerticalAlignment="Center"
-                                   Foreground="{StaticResource Foreground}"
-                                   Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Visibility="{Binding Parent.ShowChildrenNames, Converter={StaticResource BoolToVisibility}}" />
-                    </StackPanel>
-                </Button>
-
+                <views:LuncherView />
             </HierarchicalDataTemplate>
 
         </ResourceDictionary>
