@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using SugzLuncher.Helpers;
-using SugzLuncher.Interfaces;
+using SugzLuncher.Contracts;
 using SugzLuncher.Messages;
 using System;
 using System.Collections.Generic;

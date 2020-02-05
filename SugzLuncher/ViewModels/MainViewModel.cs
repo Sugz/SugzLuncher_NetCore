@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using SugzLuncher.Helpers;
-using SugzLuncher.Interfaces;
+using SugzLuncher.Contracts;
 using SugzLuncher.Messages;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Xml.Linq;
+using SugzLuncher.Plugins.ViewModels;
 
 namespace SugzLuncher.ViewModels
 {
