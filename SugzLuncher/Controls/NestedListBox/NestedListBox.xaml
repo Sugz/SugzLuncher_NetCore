@@ -70,35 +70,60 @@
                     <StackPanel x:Name="PART_Container"
                                 Background="Transparent"
                                 Orientation="Horizontal">
-                        <Grid>
-                            <ScrollViewer x:Name="PART_scrollviewer"
-                                          CanContentScroll="false"
-                                          Focusable="false"
-                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                          SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_scrollviewer"
+                                      VerticalAlignment="Top"
+                                      CanContentScroll="false"
+                                      Focusable="false"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      SnapsToDevicePixels="true">
+                            <Grid>
+                                <Rectangle x:Name="PART_Background"
+                                           Fill="{TemplateBinding Background}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="ShowBackground">
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="PART_Background"
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.25" />
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="HideBackground">
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="PART_Background"
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0"
+                                                                     Duration="0:0:0.25" />
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Rectangle>
+
                                 <ItemsPresenter x:Name="PART_Items"
-                                                SnapsToDevicePixels="true"/>
-                            </ScrollViewer>
+                                                SnapsToDevicePixels="true" />
 
-                            <Border x:Name="PART_DropIndicator"
-                                    Height="4"
-                                    VerticalAlignment="Top"
-                                    IsHitTestVisible="False"
-                                    Opacity="0">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                        <GradientStop Color="#0000AEFF" />
-                                        <GradientStop Offset="0.5" Color="#FF00AEFF" />
-                                        <GradientStop Offset="1" Color="#0000AEFF" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="5" Opacity="1" ShadowDepth="0" Color="#FF00AEFF" />
-                                </Border.Effect>
-                            </Border>
+                                <Border x:Name="PART_DropIndicator"
+                                        Height="4"
+                                        VerticalAlignment="Top"
+                                        IsHitTestVisible="False"
+                                        Opacity="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#0000AEFF" />
+                                            <GradientStop Offset="0.5" Color="#FF00AEFF" />
+                                            <GradientStop Offset="1" Color="#0000AEFF" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="5" Opacity="1" ShadowDepth="0" Color="#FF00AEFF" />
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
 
-                        </Grid>
+                        </ScrollViewer>
 
                     </StackPanel>
                 </ControlTemplate>

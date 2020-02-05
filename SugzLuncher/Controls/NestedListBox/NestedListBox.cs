@@ -1,5 +1,5 @@
 ﻿using SugzLuncher.Helpers;
-using SugzLuncher.Interfaces;
+using SugzLuncher.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +10,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using System.ComponentModel;
+using System.Windows.Shapes;
 
 namespace SugzLuncher.Controls
 {
@@ -31,6 +33,7 @@ namespace SugzLuncher.Controls
 
         private DispatcherTimer _Timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
         private StackPanel _PART_Container;
+        private Rectangle _PART_Background;
         private ItemsPresenter _PART_Items;
         private Border _PART_DropIndicator;
 
@@ -47,6 +50,69 @@ namespace SugzLuncher.Controls
 
 
 
+        #region Properties
+
+        #region ShowBackgroundOnHover
+
+        /// <summary>
+        /// Gets or sets is the bakground is shown when mouse is over.
+        /// </summary>
+        [Description("Gets or sets is the bakground is shown when mouse is over."), Category("Appearance")]
+        public bool ShowBackgroundOnHover
+        {
+            get => (bool)GetValue(ShowBackgroundOnHoverProperty);
+            set => SetValue(ShowBackgroundOnHoverProperty, value);
+        }
+
+        // DependencyProperty for ShowBackgroundOnHover
+        public static readonly DependencyProperty ShowBackgroundOnHoverProperty = DependencyProperty.Register(
+            nameof(ShowBackgroundOnHover),
+            typeof(bool),
+            typeof(NestedListBox),
+            new FrameworkPropertyMetadata(true)//, OnShowBackgroundOnHoverChanged, OnCoerceShowBackgroundOnHover)
+        );
+
+        //private static object OnCoerceShowBackgroundOnHover(DependencyObject d, object baseValue)
+        //{
+        //    return baseValue;
+        //}
+
+        //private static void OnShowBackgroundOnHoverChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+
+        //}
+
+        #endregion ShowBackgroundOnHover 
+
+        #endregion Properties
+
+
+
+        #region Events
+
+
+        public static readonly RoutedEvent ClosedEvent = EventManager.RegisterRoutedEvent(
+            nameof(Closed), 
+            RoutingStrategy.Bubble, 
+            typeof(RoutedEventHandler), 
+            typeof(NestedListBox));
+
+        public event RoutedEventHandler Closed
+        {
+            add { AddHandler(ClosedEvent, value); }
+            remove { RemoveHandler(ClosedEvent, value); }
+        }
+
+        private void RaiseClosedEvent()
+        {
+            RoutedEventArgs newEventArgs = new RoutedEventArgs(ClosedEvent);
+            RaiseEvent(newEventArgs);
+        }
+
+        #endregion Events
+
+
+
         #region Overrides
 
         /// <summary>
@@ -55,6 +121,24 @@ namespace SugzLuncher.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (Template.FindName("PART_Background", this) is Rectangle rect)
+            {
+                _PART_Background = rect;
+                //_PART_Background.Opacity = ShowBackgroundOnHover ? 0 : 1;
+
+                if (ShowBackgroundOnHover)
+                {
+                    _PART_Background.Opacity = 0;
+
+                    if (ParentListBox != null)
+                        ShowBackground(true);
+                }
+                else
+                {
+                    _PART_Background.Opacity = 1;
+                }
+            }
 
             if (GetTemplateChild("PART_Container") is StackPanel sp)
                 _PART_Container = sp;
@@ -103,10 +187,6 @@ namespace SugzLuncher.Controls
 
 
 
-        
-
-
-
         #region Constructor
 
         static NestedListBox()
@@ -149,7 +229,7 @@ namespace SugzLuncher.Controls
         private void OnMouseEnter()
         {
             StopTimers();
-            //SetBackground(true);
+            ShowBackground(true);
 
             if (ChildListBox != null)
                 ChildListBox.SelectedItem = null;
@@ -379,6 +459,12 @@ namespace SugzLuncher.Controls
             SetDropIndicator(null);
             SelectedItem = null;
             _Timer.Stop();
+
+            if (ParentListBox is null)
+            {
+                ShowBackground(false);
+                RaiseClosedEvent();
+            } 
         }
 
 
@@ -389,6 +475,27 @@ namespace SugzLuncher.Controls
         {
             _Timer.Stop();
             ParentListBox?.StopTimers();
+        }
+
+
+        /// <summary>
+        /// Set the background visual state
+        /// </summary>
+        /// <param name="show"></param>
+        private void ShowBackground(bool show)
+        {
+            if (ShowBackgroundOnHover)
+            {
+                if (_PART_Background != null)
+                {
+                    string state = show ? "ShowBackground" : "HideBackground";
+                    VisualStateManager.GoToElementState(_PART_Background, state, true);
+                }
+
+                if (ChildListBox != null && ChildListBox.IsLoaded)
+                    ChildListBox?.ShowBackground(show);
+            }
+
         }
 
 

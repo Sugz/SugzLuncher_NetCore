@@ -13,6 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SugzLuncher.ViewModels;
+using SugzLuncher.Helpers;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Interop;
+using System.Diagnostics;
+using System.Collections;
 
 namespace SugzLuncher.Views
 {
@@ -21,17 +27,71 @@ namespace SugzLuncher.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //readonly KeyboardHook _KeyboardHook = new KeyboardHook();
+        //readonly List<KeyboardHook.VKeys> _PressedKeys = new List<KeyboardHook.VKeys>();
+
+        WindowZOrder _ZOrder;
+
         public MainWindow()
         {
             InitializeComponent();
 
+            _ZOrder = new WindowZOrder(this, WindowZOrder.ZOrder.HWND_BOTTOM, true);
+
             Loaded += OnLoaded;
+            Closed += OnClosed;
         }
+
+
+        
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             SetBinding(LeftProperty, new Binding("WindowLocation.X"));
             SetBinding(TopProperty, new Binding("WindowLocation.Y"));
         }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            //_KeyboardHook.Uninstall();
+        }
+
+
+        private void OnNestedListBoxMouseEnter(object sender, MouseEventArgs e)
+        {
+            _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_TOPMOST);
+        }
+
+        private void OnNestedListBoxClosed(object sender, RoutedEventArgs e)
+        {
+            _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_BOTTOM);
+        }
+
+
+
+
+        //private void OnKeyboardHookKeyDown(KeyboardHook.VKeys key)
+        //{
+        //    if (_PressedKeys.IndexOf(key) < 0)
+        //        _PressedKeys.Add(key);
+        //}
+
+        //private void OnKeyboardHookKeyUp(KeyboardHook.VKeys key)
+        //{
+        //    _PressedKeys.Remove(key);
+        //    Debug.WriteLine($"key up: {key}; key pressed: {_PressedKeys.Count}");
+
+        //    if (_PressedKeys.Count == 1 && 
+        //        _PressedKeys.First() == KeyboardHook.VKeys.LWIN && 
+        //        key == KeyboardHook.VKeys.LMENU)
+        //    {
+        //        Topmost = true;
+        //        Debug.WriteLine("Topmost: " + Topmost);
+        //    }
+        //}
+
     }
+
+
 }

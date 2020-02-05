@@ -15,15 +15,11 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="#01000000"
-        ShowInTaskbar="True"
+        ShowInTaskbar="False"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Icon="/Resources/Icons/SugzLuncher.ico"
         mc:Ignorable="d">
 
-    <!--
-        Top="{Binding WindowLocation.Y}"
-        Left="{Binding WindowLocation.X}"
-    -->
 
     <StackPanel>
         <StackPanel.ContextMenu>
@@ -53,9 +49,12 @@
                       Fill="{Binding Foreground, ElementName=OptionsBtn, Mode=OneWay}" />
             </Button>
         </DockPanel>
-        
+
         <controls:NestedListBox ItemsSource="{Binding Children}"
-                                ItemTemplate="{StaticResource LuncherDataTemplate}" />
+                                ItemTemplate="{StaticResource LuncherDataTemplate}" 
+                                Background="#50000000"
+                                MouseEnter="OnNestedListBoxMouseEnter"
+                                Closed="OnNestedListBoxClosed"/>
     </StackPanel>
 
 </Window>
