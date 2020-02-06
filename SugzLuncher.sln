@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SugzLuncher", "SugzLuncher\SugzLuncher.csproj", "{907DDBE9-1EF4-4C2C-81EB-A781DF0830AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SugzLuncher.Contracts", "SugzLuncher.Contracts\SugzLuncher.Contracts.csproj", "{47CC1234-9AE4-4ACC-BD9D-387D84A70AF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SugzLuncher.Plugins", "SugzLuncher.Plugins\SugzLuncher.Plugins.csproj", "{2C87DBFD-FD67-41F2-94B8-93AF004ED4DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SugzLuncher.Contracts", "SugzLuncher.Contracts\SugzLuncher.Contracts.csproj", "{47CC1234-9AE4-4ACC-BD9D-387D84A70AF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{47CC1234-9AE4-4ACC-BD9D-387D84A70AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47CC1234-9AE4-4ACC-BD9D-387D84A70AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CC1234-9AE4-4ACC-BD9D-387D84A70AF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C87DBFD-FD67-41F2-94B8-93AF004ED4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C87DBFD-FD67-41F2-94B8-93AF004ED4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C87DBFD-FD67-41F2-94B8-93AF004ED4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C87DBFD-FD67-41F2-94B8-93AF004ED4DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

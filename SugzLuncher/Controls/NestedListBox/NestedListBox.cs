@@ -482,7 +482,7 @@ namespace SugzLuncher.Controls
         /// Set the background visual state
         /// </summary>
         /// <param name="show"></param>
-        private void ShowBackground(bool show)
+        public void ShowBackground(bool show)
         {
             if (ShowBackgroundOnHover)
             {
