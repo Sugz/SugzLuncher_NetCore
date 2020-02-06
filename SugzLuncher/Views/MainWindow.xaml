@@ -50,9 +50,10 @@
             </Button>
         </DockPanel>
 
-        <controls:NestedListBox ItemsSource="{Binding Children}"
+        <controls:NestedListBox x:Name="MainList" 
+                                ItemsSource="{Binding Children}"
                                 ItemTemplate="{StaticResource LuncherDataTemplate}" 
-                                Background="#50000000"
+                                Background="#AA000000"
                                 MouseEnter="OnNestedListBoxMouseEnter"
                                 Closed="OnNestedListBoxClosed"/>
     </StackPanel>

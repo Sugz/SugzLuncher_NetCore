@@ -28,10 +28,10 @@ namespace SugzLuncher.Views
     public partial class MainWindow : Window
     {
 
-        //readonly KeyboardHook _KeyboardHook = new KeyboardHook();
-        //readonly List<KeyboardHook.VKeys> _PressedKeys = new List<KeyboardHook.VKeys>();
+        readonly KeyboardHook _KeyboardHook = new KeyboardHook();
+        readonly List<KeyboardHook.VKeys> _PressedKeys = new List<KeyboardHook.VKeys>();
+        readonly WindowZOrder _ZOrder;
 
-        WindowZOrder _ZOrder;
 
         public MainWindow()
         {
@@ -41,6 +41,11 @@ namespace SugzLuncher.Views
 
             Loaded += OnLoaded;
             Closed += OnClosed;
+
+            _KeyboardHook.Install();
+            _KeyboardHook.KeyDown += OnKeyboardHookKeyDown;
+            _KeyboardHook.KeyUp += OnKeyboardHookKeyUp;
+
         }
 
 
@@ -54,8 +59,9 @@ namespace SugzLuncher.Views
 
         private void OnClosed(object sender, EventArgs e)
         {
-            //_KeyboardHook.Uninstall();
+            _KeyboardHook.Uninstall();
         }
+
 
 
         private void OnNestedListBoxMouseEnter(object sender, MouseEventArgs e)
@@ -71,25 +77,23 @@ namespace SugzLuncher.Views
 
 
 
-        //private void OnKeyboardHookKeyDown(KeyboardHook.VKeys key)
-        //{
-        //    if (_PressedKeys.IndexOf(key) < 0)
-        //        _PressedKeys.Add(key);
-        //}
+        private void OnKeyboardHookKeyDown(KeyboardHook.VKeys key)
+        {
+            if (_PressedKeys.IndexOf(key) < 0)
+                _PressedKeys.Add(key);
+        }
 
-        //private void OnKeyboardHookKeyUp(KeyboardHook.VKeys key)
-        //{
-        //    _PressedKeys.Remove(key);
-        //    Debug.WriteLine($"key up: {key}; key pressed: {_PressedKeys.Count}");
-
-        //    if (_PressedKeys.Count == 1 && 
-        //        _PressedKeys.First() == KeyboardHook.VKeys.LWIN && 
-        //        key == KeyboardHook.VKeys.LMENU)
-        //    {
-        //        Topmost = true;
-        //        Debug.WriteLine("Topmost: " + Topmost);
-        //    }
-        //}
+        private void OnKeyboardHookKeyUp(KeyboardHook.VKeys key)
+        {
+            _PressedKeys.Remove(key);
+            if (_PressedKeys.Count == 1 &&
+                _PressedKeys.First() == KeyboardHook.VKeys.LWIN &&
+                key == KeyboardHook.VKeys.LMENU)
+            {
+                _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_TOPMOST);
+                MainList.ShowBackground(true);
+            }
+        }
 
     }
 

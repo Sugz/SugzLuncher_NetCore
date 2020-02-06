@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Xml.Linq;
-using SugzLuncher.Plugins.ViewModels;
 
 namespace SugzLuncher.ViewModels
 {
@@ -29,7 +28,6 @@ namespace SugzLuncher.ViewModels
             get => _WindowLocation;
             set => Set(ref _WindowLocation, value);
         }
-
 
 
         public MainViewModel()
