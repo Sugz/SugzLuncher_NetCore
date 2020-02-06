@@ -46,6 +46,8 @@ namespace SugzLuncher.Views
             _KeyboardHook.KeyDown += OnKeyboardHookKeyDown;
             _KeyboardHook.KeyUp += OnKeyboardHookKeyUp;
 
+            MainList.MouseEnter += (s, e) => SetOnTop(true);
+            MainList.Closed += (s, e) => SetOnTop(false);
         }
 
 
@@ -63,20 +65,6 @@ namespace SugzLuncher.Views
         }
 
 
-
-        private void OnNestedListBoxMouseEnter(object sender, MouseEventArgs e)
-        {
-            _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_TOPMOST);
-        }
-
-        private void OnNestedListBoxClosed(object sender, RoutedEventArgs e)
-        {
-            _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_BOTTOM);
-        }
-
-
-
-
         private void OnKeyboardHookKeyDown(KeyboardHook.VKeys key)
         {
             if (_PressedKeys.IndexOf(key) < 0)
@@ -90,8 +78,22 @@ namespace SugzLuncher.Views
                 _PressedKeys.First() == KeyboardHook.VKeys.LWIN &&
                 key == KeyboardHook.VKeys.LMENU)
             {
+                SetOnTop(true);
+            }
+        }
+
+        private void SetOnTop(bool value)
+        {
+            if (value)
+            {
                 _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_TOPMOST);
+                WindowBlur.EnableBlur(this, true);
                 MainList.ShowBackground(true);
+            }
+            else
+            {
+                _ZOrder.SetZOrder(WindowZOrder.ZOrder.HWND_BOTTOM);
+                WindowBlur.EnableBlur(this, false);
             }
         }
 

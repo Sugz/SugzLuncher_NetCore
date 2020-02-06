@@ -125,7 +125,6 @@ namespace SugzLuncher.Controls
             if (Template.FindName("PART_Background", this) is Rectangle rect)
             {
                 _PART_Background = rect;
-                //_PART_Background.Opacity = ShowBackgroundOnHover ? 0 : 1;
 
                 if (ShowBackgroundOnHover)
                 {
@@ -212,7 +211,6 @@ namespace SugzLuncher.Controls
         private void AddEventHandlers()
         {
             _Timer.Tick += (s, e) => Deselect();
-            //MouseEnter += (s, e) => OnMouseEnter();
             _PART_Items.MouseEnter += (s, e) => OnMouseEnter();
             _PART_Items.DragEnter += (s, e) => OnMouseEnter();
             _PART_Items.MouseLeave += (s, e) => SetForDeselect();
@@ -229,7 +227,7 @@ namespace SugzLuncher.Controls
         private void OnMouseEnter()
         {
             StopTimers();
-            ShowBackground(true);
+            //ShowBackground(true);
 
             if (ChildListBox != null)
                 ChildListBox.SelectedItem = null;

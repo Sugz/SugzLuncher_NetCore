@@ -54,9 +54,7 @@
         <controls:NestedListBox x:Name="MainList" 
                                 ItemsSource="{Binding Children}"
                                 ItemTemplate="{StaticResource LuncherDataTemplate}" 
-                                Background="#AA000000"
-                                MouseEnter="OnNestedListBoxMouseEnter"
-                                Closed="OnNestedListBoxClosed"/>
+                                Background="#70000000"/>
     </StackPanel>
 
 </Window>
