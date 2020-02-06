@@ -71,6 +71,12 @@ namespace SugzLuncher.Helpers
             [DllImport("user32.dll", EntryPoint = "GetDesktopWindow", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern IntPtr GetDesktopWindow();
 
+            [DllImport("user32.dll", EntryPoint = "SetCapture", SetLastError = true, CharSet = CharSet.Unicode)]
+            public static extern IntPtr SetCapture(IntPtr hwnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool ReleaseCapture();
+
             [DllImport("user32.dll", EntryPoint = "SendMessage", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, int wParam, IntPtr lParam);
 
@@ -131,6 +137,19 @@ namespace SugzLuncher.Helpers
                 0,
                 0,
                 NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOACTIVATE);
+
+            // when bringing the window on top with the keyboard shortcut, mouse isn't captured
+            switch (zOrder)
+            {
+                case ZOrder.HWND_BOTTOM:
+                    NativeMethods.ReleaseCapture();
+                    break;
+                case ZOrder.HWND_TOPMOST:
+                    NativeMethods.SetCapture(new WindowInteropHelper(_Window).Handle);
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion Public Methods
