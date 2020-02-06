@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SugzLuncher"
         xmlns:controls="clr-namespace:SugzLuncher.Controls"
         xmlns:helpers="clr-namespace:SugzLuncher.Helpers"
+        xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         Title="SugzLuncher"
         Top="0"
         Left="0"

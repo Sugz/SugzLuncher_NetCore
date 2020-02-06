@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:SugzLuncher.ViewModels"
              xmlns:views="clr-namespace:SugzLuncher.Views"
              xmlns:controls="clr-namespace:SugzLuncher.Controls"
+             xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
              StartupUri="Views/MainWindow.xaml">
 
     <Application.Resources>
@@ -13,6 +14,7 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources\Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <vm:ViewModelLocator x:Key="Locator" />
